@@ -3,6 +3,7 @@
 	import { supabase } from '$lib/database//supabaseClient';
 	import Auth from '$lib/database//Auth.svelte';
 	import Profile from '$lib/database//Profile.svelte';
+	import FillerCards from '../components/filler/FillerCards.svelte';
 
 	user.set(supabase.auth.user());
 
@@ -16,3 +17,4 @@
 {:else}
 	<Auth />
 {/if}
+<FillerCards />

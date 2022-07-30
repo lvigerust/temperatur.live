@@ -3,6 +3,19 @@
 	import { themeChange } from 'theme-change';
 	import { theme, darkTheme, lightTeme } from '$lib/stores/themes';
 
+	let previousY = 0;
+	let currentY = 0;
+	let clientHeight = 0;
+
+	const deriveDirection = (y) => {
+		const direction = !previousY || previousY < y ? 'down' : 'up';
+		previousY = y;
+		return direction;
+	};
+
+	$: scrollDirection = deriveDirection(currentY);
+	$: offscreen = scrollDirection === 'down' && currentY > clientHeight * 4;
+
 	onMount(() => {
 		themeChange(false);
 	});
@@ -15,7 +28,13 @@
 	}
 </script>
 
-<div class="bg-base-100">
+<svelte:window bind:scrollY={currentY} />
+
+<div
+	class="bg-base-100/75 sticky top-0 z-50 backdrop-blur-sm transition-transform ease-in "
+	class:motion-safe:-translate-y-full={offscreen}
+	bind:clientHeight
+>
 	<div class="navbar max-w-7xl mx-auto">
 		<div class="navbar-start">
 			<div class="dropdown">
@@ -30,7 +49,7 @@
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							stroke-width="2"
-							d="M4 6h16M4 12h8m-8 6h16"
+							d="M4 6h16M4 12h16M4 18h7"
 						/></svg
 					>
 				</label>
@@ -39,9 +58,12 @@
 					class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 				>
 					<li><a href="/">Home</a></li>
+					<li><a href="/about">About</a></li>
+
 					<li tabindex="0">
+						<!-- svelte-ignore a11y-missing-attribute -->
 						<a class="justify-between">
-							Parent
+							Settings
 							<svg
 								class="fill-current"
 								xmlns="http://www.w3.org/2000/svg"
@@ -52,17 +74,16 @@
 							>
 						</a>
 						<ul class="p-2">
-							<li><a>Submenu 1</a></li>
-							<li><a>Submenu 2</a></li>
+							<li><a href="/">Account</a></li>
+							<li><a href="/">API Docs</a></li>
 						</ul>
 					</li>
-					<li><a>Item 3</a></li>
 				</ul>
 			</div>
-			<a class="btn btn-ghost normal-case text-xl md:hidden">Temperatur.live</a>
+			<a href="/" class="btn btn-ghost normal-case text-xl md:hidden">Temperatur.live</a>
 		</div>
 		<div class="navbar-center hidden md:flex">
-			<a class="btn btn-ghost normal-case text-xl">Temperatur.live</a>
+			<a href="/" class="btn btn-ghost normal-case text-xl">Temperatur.live</a>
 		</div>
 		<div class="navbar-end">
 			<label class="swap swap-rotate mr-6">
@@ -116,6 +137,7 @@
 					>
 				{/if}
 			</label>
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a class="btn btn-accent btn-sm sm:btn-md">Get started</a>
 		</div>
 	</div>
