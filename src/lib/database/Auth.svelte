@@ -23,8 +23,8 @@
 
 {#if message}
 	<div
-		class="alert alert-success shadow-lg w-fit absolute top-24 mx-auto inset-x-0 z-50
-		text-sm sm:text-base px-8 sm:px-14"
+		class="alert alert-success shadow-lg w-fit fixed top-20 mx-auto inset-x-0 z-50
+		text-xs sm:text-base px-8 sm:px-14"
 		in:fly={{ y: -50, delay: 250, duration: 500 }}
 	>
 		<div>
