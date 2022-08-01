@@ -44,11 +44,7 @@
 
 <svelte:window bind:scrollY={currentY} />
 
-<div
-	class="bg-base-100/75 h-16 sticky top-0 z-50 backdrop-blur-sm transition-transform ease-in "
-	class:motion-safe:-translate-y-full={offscreen}
-	bind:clientHeight
->
+<div class="sticky-glass-navbar" class:motion-safe:-translate-y-full={offscreen} bind:clientHeight>
 	<div class="navbar max-w-7xl mx-auto">
 		<div class="navbar-start">
 			<div class="dropdown">
@@ -95,13 +91,13 @@
 					</li>
 				</ul>
 			</div>
-			<a href="/" class="btn btn-ghost normal-case text-xl md:hidden">Temperatur.live</a>
+			<a href="/" class="btn btn-ghost normal-case text-lg sm:text-xl md:hidden">Temperatur.live</a>
 		</div>
 		<div class="navbar-center hidden md:flex">
 			<a href="/" class="btn btn-ghost normal-case text-xl">Temperatur.live</a>
 		</div>
 		<div class="navbar-end">
-			<label class="swap swap-rotate mr-4 sm:mr-6">
+			<label class="swap swap-rotate mr-5 sm:mr-8">
 				<!-- this hidden checkbox controls the state -->
 				<input
 					type="checkbox"
