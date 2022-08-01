@@ -3,9 +3,23 @@
 	import { themeChange } from 'theme-change';
 	import { theme, darkTheme, lightTeme } from '$lib/stores/themes';
 
-	let previousY = 0;
-	let currentY = 0;
-	let clientHeight = 0;
+	onMount(() => {
+		themeChange(false);
+	});
+
+	function clickOutside(node) {
+		const handleClick = (event) => {
+			if (!node.contains(event.target)) {
+				node.dispatchEvent(new CustomEvent('outclick'));
+			}
+		};
+		document.addEventListener('click', handleClick, true);
+		return {
+			destroy() {
+				document.removeEventListener('click', handleClick, true);
+			}
+		};
+	}
 
 	const deriveDirection = (y) => {
 		const direction = !previousY || previousY < y ? 'down' : 'up';
@@ -16,9 +30,9 @@
 	$: scrollDirection = deriveDirection(currentY);
 	$: offscreen = scrollDirection === 'down' && currentY > clientHeight * 4;
 
-	onMount(() => {
-		themeChange(false);
-	});
+	let previousY = 0;
+	let currentY = 0;
+	let clientHeight = 0;
 
 	let darkActive = false;
 	if ($theme === darkTheme) {
@@ -31,7 +45,7 @@
 <svelte:window bind:scrollY={currentY} />
 
 <div
-	class="bg-base-100/75 sticky top-0 z-50 backdrop-blur-sm transition-transform ease-in "
+	class="bg-base-100/75 h-16 sticky top-0 z-50 backdrop-blur-sm transition-transform ease-in "
 	class:motion-safe:-translate-y-full={offscreen}
 	bind:clientHeight
 >
@@ -54,6 +68,7 @@
 					>
 				</label>
 				<ul
+					use:clickOutside
 					tabindex="0"
 					class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 				>
@@ -86,7 +101,7 @@
 			<a href="/" class="btn btn-ghost normal-case text-xl">Temperatur.live</a>
 		</div>
 		<div class="navbar-end">
-			<label class="swap swap-rotate mr-6">
+			<label class="swap swap-rotate mr-4 sm:mr-6">
 				<!-- this hidden checkbox controls the state -->
 				<input
 					type="checkbox"
@@ -138,7 +153,7 @@
 				{/if}
 			</label>
 			<!-- svelte-ignore a11y-missing-attribute -->
-			<a class="btn btn-accent btn-sm sm:btn-md">Get started</a>
+			<a class="btn btn-accent btn-sm sm:btn-md mr-3 xl:mr-0">Get started</a>
 		</div>
 	</div>
 </div>

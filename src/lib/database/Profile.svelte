@@ -1,7 +1,8 @@
 <script>
 	import { supabase } from '$lib/database/supabaseClient';
 	import { user } from '$lib/database/sessionStore';
-	import Avatar from '$lib/database/Avatar.svelte';
+	import { transitions } from '$lib/stores/transitions';
+	import { fade, fly } from 'svelte/transition';
 
 	let loading = true;
 	let username = null;
@@ -64,38 +65,80 @@
 			let { error } = await supabase.auth.signOut();
 			if (error) throw error;
 		} catch (error) {
-			alert(error.message);
+			// alert(error.message);
 		} finally {
 			loading = false;
 		}
 	}
 </script>
 
-<form use:getProfile class="form-widget" on:submit|preventDefault={updateProfile}>
-	<Avatar bind:path={avatar_url} on:upload={updateProfile} />
-	<div>
-		<label for="email">Email</label>
-		<input id="email" type="text" value={$user.email} disabled />
-	</div>
-	<div>
-		<label for="username">Name</label>
-		<input id="username" type="text" bind:value={username} />
-	</div>
-	<div>
-		<label for="website">Website</label>
-		<input id="website" type="website" bind:value={website} />
-	</div>
+<svelte:head>
+	<title>Profile</title>
+</svelte:head>
 
-	<div>
-		<input
-			type="submit"
-			class="button block primary"
-			value={loading ? 'Loading ...' : 'Update'}
-			disabled={loading}
-		/>
-	</div>
+<form use:getProfile on:submit|preventDefault={updateProfile} in:fade={{ delay: $transitions.dur }}>
+	<div class="hero min-h-[calc(100vh-64px)] bg-base">
+		<div class="hero-content flex-col">
+			<div
+				class="flex flex-col items-center gap-4"
+				in:fly={{ x: $transitions.dir, delay: $transitions.dur1 }}
+			>
+				<h1 class="text-4xl font-bold">{username || $user.email}</h1>
 
-	<div>
-		<button class="button block" on:click={signOut} disabled={loading}> Sign Out </button>
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for="email">
+						<span class="label-text">Email</span>
+					</label>
+
+					<input
+						class="input input-bordered w-full max-w-xs"
+						id="email"
+						type="email"
+						bind:value={$user.email}
+						disabled
+					/>
+				</div>
+
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for="email">
+						<span class="label-text">Username</span>
+					</label>
+
+					<input
+						class="input input-bordered w-full max-w-xs"
+						id="username"
+						type="username"
+						bind:value={username}
+					/>
+				</div>
+
+				<div class="form-control w-full max-w-xs">
+					<label class="label" for="website">
+						<span class="label-text">Website</span>
+					</label>
+
+					<input
+						class="input input-bordered w-full max-w-xs"
+						id="website"
+						type="website"
+						bind:value={website}
+					/>
+				</div>
+			</div>
+
+			<div class="flex flex-col gap-3" in:fly={{ x: -$transitions.dir, delay: $transitions.dur2 }}>
+				<button class="btn btn-primary w-52 mt-6">
+					<input
+						type="submit"
+						class="cursor-pointer"
+						value={loading ? 'LOADING ...' : 'UPDATE'}
+						disabled={loading}
+					/>
+				</button>
+				<button class="btn btn-secondary w-52" on:click={signOut} disabled={loading}>
+					Sign Out
+				</button>
+			</div>
+		</div>
 	</div>
 </form>

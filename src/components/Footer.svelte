@@ -15,10 +15,11 @@
 		<p class="font-bold">
 			Temperatur.live Inc. <br />Providing reliable weather data 2022
 		</p>
-		<p>Copyright © 2022 - All right reserved</p>
+		<p>Copyright © 2022 - All rights reserved</p>
 	</div>
 	<div>
 		<div class="grid grid-flow-col gap-4">
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -31,6 +32,7 @@
 					/></svg
 				></a
 			>
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a
 				><svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +45,7 @@
 					/></svg
 				></a
 			>
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a
 				><svg
 					xmlns="http://www.w3.org/2000/svg"

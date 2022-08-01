@@ -1,8 +1,13 @@
 <script>
-	import FillerHero from '../components/fillers/FillerHero.svelte';
+	import { transitions } from '$lib/stores/transitions';
 	import { fly } from 'svelte/transition';
+	import FillerHero from '../components/fillers/FillerHero.svelte';
 </script>
 
-<div in:fly={{ x: 500, delay: 400 }} out:fly={{ x: 500 }}>
+<div
+	class="test"
+	in:fly={{ x: $transitions.dir, delay: $transitions.dur }}
+	out:fly={{ x: $transitions.dir, duration: $transitions.dur }}
+>
 	<FillerHero />
 </div>

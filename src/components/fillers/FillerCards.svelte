@@ -1,5 +1,6 @@
 <div class="hero min-h-screen bg-base-200">
 	<div class="hero-content flex-col lg:flex-row">
+		<!-- svelte-ignore a11y-missing-attribute -->
 		<img src="https://placeimg.com/260/400/arch" class="max-w-sm rounded-lg shadow-2xl" />
 		<div>
 			<h1 class="text-5xl font-bold">Box Office News!</h1>
@@ -16,6 +17,7 @@
 
 <div class="hero min-h-screen bg-base-200">
 	<div class="hero-content flex-col lg:flex-row-reverse">
+		<!-- svelte-ignore a11y-missing-attribute -->
 		<img src="https://placeimg.com/260/400/arch" class="max-w-sm rounded-lg shadow-2xl" />
 		<div>
 			<h1 class="text-5xl font-bold">Box Office News!</h1>
