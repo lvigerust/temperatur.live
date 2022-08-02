@@ -1,4 +1,4 @@
-<div class="hero min-h-screen bg-base-200">
+<div class="hero min-h-[calc(100vh-64px)] bg-base-200">
 	<div class="hero-content flex-col lg:flex-row">
 		<!-- svelte-ignore a11y-missing-attribute -->
 		<img src="https://placeimg.com/260/400/arch" class="max-w-sm rounded-lg shadow-2xl" />

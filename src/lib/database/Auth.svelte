@@ -13,6 +13,9 @@
 			const { error } = await supabase.auth.signIn({ email });
 			if (error) throw error;
 			message = true;
+			setTimeout(() => {
+				message = false;
+			}, 7500);
 		} catch (error) {
 			alert(error.error_description || error.message);
 		} finally {
@@ -26,6 +29,7 @@
 		class="alert alert-success shadow-lg w-fit fixed top-20 mx-auto inset-x-0 z-50
 		text-xs sm:text-base px-8 sm:px-14"
 		in:fly={{ y: -50, delay: 250, duration: 500 }}
+		out:fly={{ y: -50, duration: 500 }}
 	>
 		<div>
 			<svg
